@@ -4,16 +4,22 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch} from "react-router-dom";
 
 import Home from './pages/Home';
-import About from './pages/About';
-import Shop from './pages/Shop';
+import Profile from './pages/Profile';
+import SearchRecipe from './pages/SearchRecipe';
+import RecipeDetail from './pages/RecipeDetail';
+import Groceries from './pages/Groceries';
+import Group from "./pages/Group";
 
 function App() {
   return (
       <main>
         <Switch>
           <Route path={'/'} component={Home} exact/>
-          <Route path={"/about"} component={About}/>
-          <Route path={"/shop"} component={Shop}/>
+          <Route path={"/groceries"} component={Groceries}/>
+          <Route path={"/group"} component={Group}/>
+          <Route path={"/profile"} component={Profile}/>
+          <Route path={"/searchrecipe"} component={SearchRecipe}/>
+          <Route path={"/recipedetail"} conmponent={RecipeDetail}/>
           <Route component={Error}/>
         </Switch>
       </main>

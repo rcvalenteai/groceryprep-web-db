@@ -1,7 +1,7 @@
 import React from 'react';
 import NavBar from "../components/NavBar";
 
-class About extends React.Component {
+class Profile extends React.Component {
     constructor() {
         super();
         this.state =
@@ -24,6 +24,7 @@ class About extends React.Component {
         return (
             <div>
                 <NavBar/>
+                <h1>Profile Page</h1>
                 <p>My favorite color is {this.state.color}</p>
                 <button onClick={ () => this.isClicked()}>Click Me</button>
             </div>
@@ -31,4 +32,4 @@ class About extends React.Component {
     }
 }
 
-export default About;
+export default Profile;
