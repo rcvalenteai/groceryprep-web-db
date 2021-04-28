@@ -2,16 +2,23 @@ import React from 'react';
 import NavBar from "../components/NavBar";
 import Header from "../components/Header";
 import StaticMain from "../components/StaticMain";
+import NewsFeed from "../components/NewsFeed";
 
 
 class Home extends React.Component {
     constructor(props) {
-        super();
+        super(props);
+        this.setState( {color: 'red'});
         this.state =
             {
-                color: 'green',
-                userID: '1'
-            };
+                // fname: props.fname,
+                // lname: props.lname,
+                // userID: props.userID
+                //TODO: connect with login page props
+                fname: "Richard",
+                lname: "Valente",
+                userID: "2"
+            }
     }
 
     render() {
@@ -19,8 +26,8 @@ class Home extends React.Component {
             <div>
                 <Header/>
                 <NavBar/>
-                <StaticMain/>
-                <p>My favorite color is {this.state.color}</p>
+                <StaticMain props={this.state}/>
+                <NewsFeed props={this.state}/>
             </div>
         )
     }
