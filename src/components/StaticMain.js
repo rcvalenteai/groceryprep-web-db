@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from "react-router-dom";
-import ingredientStatic from './staticingredients.svg';
+import ingredientStatic from './staticingredients.png';
+import logoStatic from './staticlogo.png';
 
 class StaticMain extends React.Component {
     constructor(props) {
@@ -13,9 +14,9 @@ class StaticMain extends React.Component {
     render() {
         return (
             <div>
+                <img src={logoStatic} alt={"Grocery Prepper logo"} style={{width: "80%"}}/>
                 <p>Color is {this.state.color}</p>
-                <img src={ingredientStatic} alt={"static ingredient image"}/>
-                <ingredientStatic/>
+                <img src={ingredientStatic} alt={"static ingredient"} style={{width: "100%"}} />
             </div>
         )
 
