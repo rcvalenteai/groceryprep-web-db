@@ -2,10 +2,6 @@ import React from 'react';
 import NavBar from "../components/NavBar";
 import Header from "../components/Header";
 import RecipeTable from "../components/RecipeList"
-import Button from 'react-bootstrap/Button';
-//import Delete from '@material-ui/icons/DeleteForeverOutlined';
-import Form from 'react-bootstrap/Form';
-//import Swal from "sweetalert2";
 
 class SearchRecipe extends React.Component {
   constructor(props) {
@@ -35,28 +31,28 @@ class SearchRecipe extends React.Component {
 	}
 
 	render() {
-    console.log(this.state.items)
-    const loading = this.state.loading;
-    console.log(loading)
-    let recipeList;
-    if (!loading) {
-      recipeList = (
-				<RecipeTable
-				    data				= { this.state.items }
-        />
-      )
-    } else {
-      recipeList = <h1>Loading...</h1>
-    }
+        console.log(this.state.items)
+        const loading = this.state.loading;
+        console.log(loading)
+        let recipeList;
+        if (!loading) {
+          recipeList = (
+                    <RecipeTable
+                        data				= { this.state.items }
+            />
+          )
+        } else {
+          recipeList = <h1>Loading...</h1>
+        }
 
-		return (
-			<div>
-        <Header/>
-        <NavBar/>
-        <h1>Search Recipe Page</h1>
-        {recipeList}
-			</div>
-		)
+        return (
+            <div>
+            <Header/>
+            <NavBar/>
+            <h1>Search Recipe Page</h1>
+            {recipeList}
+                </div>
+            )
 	}
 }
 

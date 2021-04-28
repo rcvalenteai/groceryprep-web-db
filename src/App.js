@@ -19,7 +19,7 @@ function App() {
           <Route path={"/group"} component={Group}/>
           <Route path={"/profile"} component={Profile}/>
           <Route path={"/searchrecipe"} component={SearchRecipe}/>
-          <Route path={"/recipedetail"} conmponent={RecipeDetail}/>
+          <Route path={"/recipes/detail"} component={RecipeDetail}/>
           <Route component={Error}/>
         </Switch>
       </main>

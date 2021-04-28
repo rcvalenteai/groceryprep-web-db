@@ -1,4 +1,5 @@
 import React from 'react';
+import RecipeListDisplay from "./RecipeListDisplay"
 
 function RecipeTable({data}) 
 {
@@ -7,9 +8,7 @@ function RecipeTable({data})
     return (
       <div>
         {data.map((recipe) => {
-          const name = recipe.name;
-          //return <Recipe />;
-          return <h2>{name}</h2>;
+          return <RecipeListDisplay recipe={recipe} />;
         })}
       </div>
     )
