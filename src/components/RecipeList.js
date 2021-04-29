@@ -1,7 +1,7 @@
 import React from 'react';
 import RecipeListDisplay from "./RecipeListDisplay"
 
-function RecipeTable({data}) 
+function RecipeList({data})
 {
   // render the UI
   if (data) {
@@ -16,4 +16,4 @@ function RecipeTable({data})
   return (null);
 }
 
-export default RecipeTable;
+export default RecipeList;
