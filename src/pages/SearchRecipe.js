@@ -3,6 +3,7 @@ import NavBar from "../components/NavBar";
 import Header from "../components/Header";
 import RecipeList from "../components/RecipeList"
 import MultiSelect from "react-multi-select-component";
+import Dropdown from "react-dropdown"
 import qs from "querystring"
 
 class SearchRecipe extends React.Component {
@@ -11,9 +12,9 @@ class SearchRecipe extends React.Component {
         this.state = {
             items: [],
             itemCount: 0,
-            //dataSource	: [],
-            //filter    	: '',
             tags: [],
+            currentGroup: {},
+            userGroups: [],
             selectedTags: [],
             searchFilter: "",
             loading: true,
@@ -23,18 +24,8 @@ class SearchRecipe extends React.Component {
 
     componentDidMount() {
         this.fetchAllSearchTags();
-        this.fetchAllRecipes();
-    }
-
-    fetchAllRecipes = async () => {
-        let get_recipes_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/recipes";
-        let data = await fetch(get_recipes_url)
-        let recipeData = await data.json()
-        this.setState({
-            items: recipeData.items,
-            itemCount: recipeData.item_count,
-            loading: false
-        })
+        this.fetchUserGroups();
+        this.fetchSearchRecipes();
     }
 
     fetchAllSearchTags = async () => {
@@ -43,6 +34,18 @@ class SearchRecipe extends React.Component {
         let tagsData = await data.json()
         this.setState({
             tags: tagsData.items,
+        })
+    }
+
+    fetchUserGroups = async () => {
+        let get_user_groups_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/user/groups";
+        let user = "?userId=1"
+        get_user_groups_url += user
+        let data = await fetch(get_user_groups_url)
+        let user_groupsData = await data.json()
+        this.setState({
+            currentGroup: user_groupsData.items[0],
+            userGroups: user_groupsData.items,
         })
     }
 
@@ -57,7 +60,7 @@ class SearchRecipe extends React.Component {
         if (search) {
             queryObj["search"] = search
         }
-        if (tags) {
+        if (tags.length > 0) {
             queryObj["tags"] = tags.toString()
         }
         let query = qs.stringify(queryObj)
@@ -71,10 +74,7 @@ class SearchRecipe extends React.Component {
         this.setState({
             items: recipeData.items,
             itemCount: recipeData.item_count,
-            //dataSource: recipeData.list.filter(recipe =>
-            //recipe.recipeID.includes(this.state.filter)),
-            //dataSource: recipeData.list,
-            //loading: false
+            loading: false
         })
 
     }
@@ -102,6 +102,14 @@ class SearchRecipe extends React.Component {
         })
     }
 
+    handleSelectGroup(group) {
+        console.log("Select Group")
+        console.log(group)
+        this.setState({
+            currentGroup: group.value
+        })
+    }
+
     render() {
         console.log(this.state.items)
         const loading = this.state.loading;
@@ -125,11 +133,22 @@ class SearchRecipe extends React.Component {
             return labelValueObj
         })
 
+        let groupLabelValue;
+        let groups = this.state.userGroups;
+        groupLabelValue = groups.map(group => {
+            let labelGroupValue = {}
+            labelGroupValue["label"] = group.name
+            labelGroupValue["value"] = group
+            return labelGroupValue
+        })
+
         return (
             <div>
                 <Header/>
                 <NavBar/>
-                <h1>Search Recipe Page</h1>
+                <h2>Current Group: {this.state.currentGroup.name}</h2>
+                <Dropdown options={groupLabelValue} onChange={group => this.handleSelectGroup(group)} value={this.state.currentGroup.name}/>
+                <h2>Search Recipe Page</h2>
                 <form onSubmit={e => this.handleSearch(e)}>
                     <label>
                         Search by Recipe Name:
