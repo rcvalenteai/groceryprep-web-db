@@ -114,6 +114,28 @@ class Groceries extends React.Component {
         })
     }
 
+    openOrder = async () => {
+        let base_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/order";
+        console.log(this.state.currentGroup.location)
+        fetch(base_url, {
+            //mode: 'no-cors',
+            method: 'POST',
+            body: JSON.stringify({
+                groupUrl: this.state.currentGroup.location
+            }),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }).then(response => response.json())
+            .then(responseData => {
+                console.log(responseData)
+            }).then(() =>
+                this.fetchGroupOrder()
+        )
+
+    }
+
     handleSplit(event) {
         event.preventDefault()
         console.log("Split Cost")
@@ -141,6 +163,7 @@ class Groceries extends React.Component {
     handleOpenOrder(event) {
         event.preventDefault()
         console.log("Open Order")
+        this.openOrder()
     }
 
     render() {
