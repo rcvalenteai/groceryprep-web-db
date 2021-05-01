@@ -36,20 +36,21 @@ class Groceries extends React.Component {
         let group_data = await fetch(get_user_groups_url)
         let user_group_data = await group_data.json()
         let group_url = user_group_data.items[0].location
-        console.log(group_url)
         let get_recipes_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/order/";
         get_recipes_url += group_url
-        console.log(get_recipes_url)
         let data = await fetch(get_recipes_url)
         let orderData = await data.json()
         let split_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/split-order/";
         split_url += group_url
         split_url += "&cost=0"
-        console.log(split_url)
         let split_data = await fetch(split_url)
         let splitData = await split_data.json()
+
+        let sessionStateString = sessionStorage.getItem('token')
+        let sessionState = JSON.parse(sessionStateString)
+        let currentGroup = user_group_data.items.find((e) => e.location === sessionState.groupUrl)
         this.setState({
-            currentGroup: user_group_data.items[0],
+            currentGroup: currentGroup,
             userGroups: user_group_data.items,
             ingredients: orderData.ingredients,
             ingredientCount: orderData.ingredient_count,
@@ -151,7 +152,10 @@ class Groceries extends React.Component {
 
     handleSelectGroup(group) {
         console.log("Select Group")
-        console.log(group)
+        let sessionStorageString = window.sessionStorage.getItem('token')
+        let sessionStorage = JSON.parse(sessionStorageString)
+        sessionStorage['groupUrl'] = group.value.location
+        window.sessionStorage.setItem('token', JSON.stringify(sessionStorage))
         this.setState({
                 currentGroup: group.value
             },

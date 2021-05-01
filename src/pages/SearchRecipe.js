@@ -43,8 +43,12 @@ class SearchRecipe extends React.Component {
         get_user_groups_url += user
         let data = await fetch(get_user_groups_url)
         let user_groupsData = await data.json()
+
+        let sessionStateString = sessionStorage.getItem('token')
+        let sessionState = JSON.parse(sessionStateString)
+        let currentGroup = user_groupsData.items.find((e) => e.location === sessionState.groupUrl)
         this.setState({
-            currentGroup: user_groupsData.items[0],
+            currentGroup: currentGroup,
             userGroups: user_groupsData.items,
         })
     }
@@ -105,6 +109,10 @@ class SearchRecipe extends React.Component {
     handleSelectGroup(group) {
         console.log("Select Group")
         console.log(group)
+        let sessionStorageString = window.sessionStorage.getItem('token')
+        let sessionStorage = JSON.parse(sessionStorageString)
+        sessionStorage['groupUrl'] = group.value.location
+        window.sessionStorage.setItem('token', JSON.stringify(sessionStorage))
         this.setState({
             currentGroup: group.value
         })
