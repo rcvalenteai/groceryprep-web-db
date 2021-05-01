@@ -48,7 +48,7 @@ class Groceries extends React.Component {
         let orderData = await data.json()
         let split_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/split-order/";
         split_url += group_url
-        split_url += "&cost=0"
+        split_url += "&cost=" + orderData.totalCost
         let split_data = await fetch(split_url)
         let splitData = await split_data.json()
 
@@ -60,6 +60,8 @@ class Groceries extends React.Component {
             ingredientCount: orderData.ingredient_count,
             recipes: orderData.recipes,
             recipeCount: orderData.recipe_count,
+            orderCost: orderData.totalCost,
+            costPerPerson: splitData.costPer,
             loading: false
         })
         if (!orderData.hasOwnProperty('errorMessage')) {

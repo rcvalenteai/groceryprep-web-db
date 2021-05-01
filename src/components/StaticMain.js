@@ -6,26 +6,14 @@ import logoStatic from './staticlogo.png';
 class StaticMain extends React.Component {
     constructor(props) {
         super(props);
-        // this.state =
-        //     {
-        //         fname: props.fname,
-        //         lname: props.lname,
-        //         userID: props.userID
-        //     }
-        console.log(props);
-        // console.log(this.state);
     }
+
     render() {
-        // const userInfo = {
-        //     fname: "Rich",
-        //     lname: "Valente",
-        //     userID: "1"
-        // };
         return (
             <div>
                 <img src={logoStatic} alt={"Grocery Prepper logo"} style={{width: "80%"}}/>
-                <Greeting userInfo={this.props.props}/>
-                <img src={ingredientStatic} alt={"static ingredient"} style={{width: "100%"}} />
+                <Greeting/>
+                <img src={ingredientStatic} alt={"static ingredient"} style={{width: "100%"}}/>
             </div>
         )
 
@@ -33,13 +21,21 @@ class StaticMain extends React.Component {
 
 }
 
-const Greeting = ({userInfo}) => (
-    <div>
-        <p style={{textAlign: "center", margin: "5%"}}>Hello {userInfo.fname} {userInfo.lname}, welcome to GroceryPrepper. This app enables you to quickly generate a grocery list for yourself
-            and friends. Don't add ingredients one at a time, plan home cooking one RECIPE at a time!</p>
-        <h3 style = {{textAlign: "center", margin: "5%"}}>User ID: {userInfo.userID}</h3>
-    </div>
-)
+const Greeting = () => {
+    let sessionStorageString = window.sessionStorage.getItem('token')
+    let sessionStorage = JSON.parse(sessionStorageString)
+
+    const userIdRegex = /\d+/g
+    return (
+        <div>
+            <p style={{textAlign: "center", margin: "5%"}}>Hello {sessionStorage.firstName} {sessionStorage.lastName}, welcome to
+                GroceryPrepper.
+                This app enables you to quickly generate a grocery list for yourself
+                and friends. Don't add ingredients one at a time, plan home cooking one RECIPE at a time!</p>
+            <h3 style={{textAlign: "center", margin: "5%"}}>User ID: {sessionStorage.userUrl.match(userIdRegex)}</h3>
+        </div>
+    )
+}
 
 export default StaticMain;
 
