@@ -9,6 +9,7 @@ import SearchRecipe from './pages/SearchRecipe';
 import RecipeDetail from './pages/RecipeDetail';
 import Groceries from './pages/Groceries';
 import Group from "./pages/Group";
+import Ingredients from "./pages/SearchIngredients";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path={"/profile"} component={Profile}/>
           <Route path={"/searchrecipe"} component={SearchRecipe}/>
           <Route path={"/recipes/detail"} component={RecipeDetail}/>
+          <Route path={"/searchingredients"} component={Ingredients}/>
           <Route component={Error}/>
         </Switch>
       </main>

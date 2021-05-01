@@ -19,6 +19,7 @@ class Home extends React.Component {
                 lname: "Valente",
                 userID: "2"
             }
+        console.log(this.state)
     }
 
     render() {

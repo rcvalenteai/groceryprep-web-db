@@ -6,12 +6,14 @@ import logoStatic from './staticlogo.png';
 class StaticMain extends React.Component {
     constructor(props) {
         super(props);
-        this.state =
-            {
-                fname: props.fname,
-                lname: props.lname,
-                userID: props.userID
-            }
+        // this.state =
+        //     {
+        //         fname: props.fname,
+        //         lname: props.lname,
+        //         userID: props.userID
+        //     }
+        console.log(props);
+        // console.log(this.state);
     }
     render() {
         // const userInfo = {
@@ -22,7 +24,7 @@ class StaticMain extends React.Component {
         return (
             <div>
                 <img src={logoStatic} alt={"Grocery Prepper logo"} style={{width: "80%"}}/>
-                <Greeting userInfo={this.state}/>
+                <Greeting userInfo={this.props.props}/>
                 <img src={ingredientStatic} alt={"static ingredient"} style={{width: "100%"}} />
             </div>
         )
@@ -35,6 +37,7 @@ const Greeting = ({userInfo}) => (
     <div>
         <p style={{textAlign: "center", margin: "5%"}}>Hello {userInfo.fname} {userInfo.lname}, welcome to GroceryPrepper. This app enables you to quickly generate a grocery list for yourself
             and friends. Don't add ingredients one at a time, plan home cooking one RECIPE at a time!</p>
+        <h3 style = {{textAlign: "center", margin: "5%"}}>User ID: {userInfo.userID}</h3>
     </div>
 )
 

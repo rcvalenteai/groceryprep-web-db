@@ -3,6 +3,8 @@ import RecipeListDisplay from "./RecipeListDisplay"
 
 function RecipeList({data})
 {
+  console.log("Recipe List")
+  console.log(data);
   // render the UI
   if (data) {
     return (
