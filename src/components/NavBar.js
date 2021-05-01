@@ -12,8 +12,10 @@ class NavBar extends React.Component {
                             <td><Link to={"/groceries"}>Groceries</Link></td>
                             <td><Link to={"/searchrecipe"}>Search</Link></td>
                             <td><Link to={"/searchingredients"}>Ingredients</Link></td>
+                            <td><Link to={"/searchmealplans"}>Meal Plans</Link></td>
                             <td><Link to={"/group"}>Group</Link></td>
                             <td><Link to={"/profile"}>Profile</Link></td>
+                            <td><Link to={"/creator"}>Creator</Link></td>
                         </tr>
                     </tbody>
                 </table>

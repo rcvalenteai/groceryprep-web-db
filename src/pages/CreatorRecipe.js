@@ -1,8 +1,9 @@
 import React from 'react';
 import NavBar from "../components/NavBar";
 import Header from "../components/Header";
+import CreatorNavBar from "../components/CreatorNavBar";
 
-class Profile extends React.Component {
+class CreatorRecipe extends React.Component {
     constructor(props) {
         super(props);
         this.state =
@@ -25,7 +26,7 @@ class Profile extends React.Component {
         return (
             <div>
                 <Header/>
-                <NavBar/>
+                <CreatorNavBar/>
                 <h1>Profile Page</h1>
                 <p>My favorite color is {this.state.color}</p>
                 <button onClick={ () => this.isClicked()}>Click Me</button>
@@ -34,4 +35,4 @@ class Profile extends React.Component {
     }
 }
 
-export default Profile;
+export default CreatorRecipe;

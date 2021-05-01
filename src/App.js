@@ -12,6 +12,10 @@ import Group from "./pages/Group";
 import Ingredients from "./pages/SearchIngredients";
 import Login from "./pages/Login";
 import useToken from "./components/useToken";
+import MealPlans from "./pages/SearchMealPlans";
+import Creator from "./pages/Creator";
+import CreatorMealPlan from "./pages/CreatorMealPlan";
+import CreatorRecipe from "./pages/CreatorRecipe";
 
 function App() {
     const {token, setToken} = useToken()
@@ -28,8 +32,12 @@ function App() {
                 <Route path={"/group"} component={Group}/>
                 <Route path={"/profile"} component={Profile}/>
                 <Route path={"/searchrecipe"} component={SearchRecipe}/>
-                <Route path={"/recipes/detail"} component={RecipeDetail}/>
                 <Route path={"/searchingredients"} component={Ingredients}/>
+                <Route path={"/searchmealplans"} component={MealPlans}/>
+                <Route path={"/recipes/detail"} component={RecipeDetail}/>
+                <Route path={"/creator"} component={Creator} exact/>
+                <Route path={"/creator/mealplan"} component={CreatorMealPlan} exact/>
+                <Route path={"/creator/recipe"} component={CreatorRecipe} exact/>
           <Route component={Error}/>
             </Switch>
         </main>
