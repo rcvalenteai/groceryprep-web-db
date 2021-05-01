@@ -9,8 +9,8 @@ function RecipeList({data})
   if (data) {
     return (
       <div>
-        {data.map((recipe) => {
-          return <RecipeListDisplay recipe={recipe} />;
+        {data.map((recipe, index) => {
+          return <RecipeListDisplay key={index} recipe={recipe} />;
         })}
       </div>
     )

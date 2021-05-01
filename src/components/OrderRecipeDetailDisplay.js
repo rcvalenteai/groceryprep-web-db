@@ -30,8 +30,8 @@ function OrderRecipeDetailDisplay({recipe}) {
             <h3>Servings: {servings}</h3>
             {descriptionTag}
             <h4>Ingredients:</h4>
-            {recipe.items.map((ingredient) => {
-                return <RecipeIngredientDisplay ingredient={ingredient}/>;
+            {recipe.items.map((ingredient, index) => {
+                return <RecipeIngredientDisplay key={index} ingredient={ingredient}/>;
             })}
             <br></br>
         </div>

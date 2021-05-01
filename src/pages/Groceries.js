@@ -37,8 +37,6 @@ class Groceries extends React.Component {
         //
         let get_user_groups_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/group/";
         get_user_groups_url += sessionState.userUrl
-        console.log("get_user_groups_url")
-        console.log(get_user_groups_url)
         let group_data = await fetch(get_user_groups_url)
         let user_group_data = await group_data.json()
         let group_url = user_group_data.items[0].location
@@ -78,18 +76,14 @@ class Groceries extends React.Component {
 
     fetchGroupOrder = async () => {
         let group_url = this.state.currentGroup.location
-        console.log(group_url)
         let get_recipes_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/order/";
         get_recipes_url += group_url
-        console.log(get_recipes_url)
         let data = await fetch(get_recipes_url)
         let orderData = await data.json()
         if (!orderData.hasOwnProperty('errorMessage')) {
             let split_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/split-order/";
             split_url += group_url
             split_url += "&cost=" + orderData.totalCost
-            console.log(split_url)
-            console.log(orderData)
             let split_data = await fetch(split_url)
             let splitData = await split_data.json()
             this.setState({
@@ -123,7 +117,6 @@ class Groceries extends React.Component {
 
     openOrder = async () => {
         let base_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/order";
-        console.log(this.state.currentGroup.location)
         fetch(base_url, {
             //mode: 'no-cors',
             method: 'POST',
@@ -136,7 +129,6 @@ class Groceries extends React.Component {
             }
         }).then(response => response.json())
             .then(responseData => {
-                console.log(responseData)
             }).then(() =>
                 this.fetchGroupOrder()
         )
@@ -145,7 +137,6 @@ class Groceries extends React.Component {
 
     closeOrder = async () => {
         let base_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/order/close";
-        console.log(this.state.currentGroup.location)
         fetch(base_url, {
             //mode: 'no-cors',
             method: 'POST',
@@ -158,7 +149,6 @@ class Groceries extends React.Component {
             }
         }).then(response => response.json())
             .then(responseData => {
-                console.log(responseData)
             }).then(() =>
             this.fetchGroupOrder()
         )
@@ -167,19 +157,16 @@ class Groceries extends React.Component {
 
     handleSplit(event) {
         event.preventDefault()
-        console.log("Split Cost")
         this.fetchSplitOrder()
     }
 
     orderChangeHandler(event) {
-        console.log(event.target.value)
         this.setState({
             orderCost: event.target.value
         })
     }
 
     handleSelectGroup(group) {
-        console.log("Select Group")
         let sessionStorageString = window.sessionStorage.getItem('token')
         let sessionStorage = JSON.parse(sessionStorageString)
         sessionStorage['groupUrl'] = group.value.location
@@ -194,20 +181,16 @@ class Groceries extends React.Component {
 
     handleOpenOrder(event) {
         event.preventDefault()
-        console.log("Open Order")
         this.openOrder()
     }
 
     handleCloseOrder(event) {
         event.preventDefault()
-        console.log("Close Order")
         this.closeOrder()
     }
 
     render() {
-        console.log(this.state.items)
         const loading = this.state.loading;
-        console.log(loading)
         const recipeCount = this.state.recipeCount
         const ingredientCount = this.state.ingredientCount
         let recipeList;
@@ -244,7 +227,7 @@ class Groceries extends React.Component {
 
         let groupLabelValue;
         let groups = this.state.userGroups;
-        groupLabelValue = groups.map(group => {
+        groupLabelValue = groups.map((group, index) => {
             let labelGroupValue = {}
             labelGroupValue["label"] = group.name
             labelGroupValue["value"] = group

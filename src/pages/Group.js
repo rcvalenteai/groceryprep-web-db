@@ -3,6 +3,7 @@ import NavBar from "../components/NavBar";
 import Header from "../components/Header";
 import GroupList from "../components/GroupList";
 import qs from "querystring";
+import CreateGroup from "../components/CreateGroup";
 
 class Group extends React.Component {
     constructor(props) {
@@ -71,6 +72,8 @@ class Group extends React.Component {
                 <Header/>
                 <NavBar/>
                 <h1>Group Order Page</h1>
+                <CreateGroup/>
+                <h2>Group Search</h2>
                 <form onSubmit={e => this.handleSearch(e)}>
                     <label>
                         Search by Group Name:

@@ -19,8 +19,8 @@ function RecipeDetailDisplay({recipe}) {
             <h3>Calories: {calories}</h3>
             {descriptionTag}
             <h4>Ingredients:</h4>
-            {recipe.ingredients.items.map((ingredient) => {
-                return <RecipeIngredientDisplay ingredient={ingredient}/>;
+            {recipe.ingredients.items.map((ingredient, index) => {
+                return <RecipeIngredientDisplay key={index} ingredient={ingredient}/>;
             })}
             <br></br>
         </div>

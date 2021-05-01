@@ -8,8 +8,8 @@ function OrderRecipeList({data})
   if (data) {
     return (
       <div>
-        {data.map((recipe) => {
-          return <OrderRecipeDetailDisplay recipe={recipe} />;
+        {data.map((recipe, index) => {
+          return <OrderRecipeDetailDisplay key={index} recipe={recipe} />;
         })}
       </div>
     )
