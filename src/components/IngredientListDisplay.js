@@ -7,9 +7,8 @@ function IngredientListDisplay({ingredient}) {
     const name = ingredient.iname;
     const calories = ingredient.calories;
     const quantity = ingredient.quantity;
+    const orderQuantity = ingredient.order_quantity;
     const unit = ingredient.unit;
-    const servings = ingredient.servings;
-    let descriptionTag;
 
     let formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
@@ -20,9 +19,9 @@ function IngredientListDisplay({ingredient}) {
     if (ingredient) return (
         <div>
             <h2>{name}</h2>
+            <h3>Order Quantity: {orderQuantity}</h3>
             <h3>Calories: {calories}</h3>
             <h3>Price: {price}</h3>
-            <h3>Servings: {servings}</h3>
             <h3>Quantity: {quantity} {unit}</h3>
             <br></br>
         </div>

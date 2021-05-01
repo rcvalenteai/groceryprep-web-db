@@ -30,9 +30,15 @@ class Groceries extends React.Component {
     }
 
     initFetchGroupOrder = async () => {
-        let get_user_groups_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/user/groups";
-        let user = "?userId=1"
-        get_user_groups_url += user
+        // Get session data
+        let sessionStateString = sessionStorage.getItem('token')
+        let sessionState = JSON.parse(sessionStateString)
+
+        //
+        let get_user_groups_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/group/";
+        get_user_groups_url += sessionState.userUrl
+        console.log("get_user_groups_url")
+        console.log(get_user_groups_url)
         let group_data = await fetch(get_user_groups_url)
         let user_group_data = await group_data.json()
         let group_url = user_group_data.items[0].location
@@ -46,8 +52,6 @@ class Groceries extends React.Component {
         let split_data = await fetch(split_url)
         let splitData = await split_data.json()
 
-        let sessionStateString = sessionStorage.getItem('token')
-        let sessionState = JSON.parse(sessionStateString)
         let currentGroup = user_group_data.items.find((e) => e.location === sessionState.groupUrl)
         this.setState({
             currentGroup: currentGroup,
@@ -137,6 +141,28 @@ class Groceries extends React.Component {
 
     }
 
+    closeOrder = async () => {
+        let base_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/order/close";
+        console.log(this.state.currentGroup.location)
+        fetch(base_url, {
+            //mode: 'no-cors',
+            method: 'POST',
+            body: JSON.stringify({
+                groupUrl: this.state.currentGroup.location
+            }),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }).then(response => response.json())
+            .then(responseData => {
+                console.log(responseData)
+            }).then(() =>
+            this.fetchGroupOrder()
+        )
+
+    }
+
     handleSplit(event) {
         event.preventDefault()
         console.log("Split Cost")
@@ -168,6 +194,12 @@ class Groceries extends React.Component {
         event.preventDefault()
         console.log("Open Order")
         this.openOrder()
+    }
+
+    handleCloseOrder(event) {
+        event.preventDefault()
+        console.log("Close Order")
+        this.closeOrder()
     }
 
     render() {
@@ -228,6 +260,7 @@ class Groceries extends React.Component {
         if (openOrder) {
             orderDisplay = (
                 <div>
+                    <button onClick={e => this.handleCloseOrder(e)}>Close Order!</button>
                     <form onSubmit={e => this.handleSplit(e)}>
                         <label>
                             Calculate Order Cost:

@@ -6,6 +6,7 @@ import RecipeIngredientDisplay from "./RecipeIngredientDisplay";
 function OrderRecipeDetailDisplay({recipe}) {
     const name = recipe.name;
     const calories = recipe.calories;
+    const orderQuantity = recipe.order_quantity;
     const servings = recipe.servings;
     const description = recipe.description;
     const location = recipe.location;
@@ -23,6 +24,7 @@ function OrderRecipeDetailDisplay({recipe}) {
     if (recipe) return (
         <div>
             <h2>{name}</h2>
+            <h3>Order Quantity: {orderQuantity}</h3>
             <h3>Calories: {calories}</h3>
             <h3>Price: {price}</h3>
             <h3>Servings: {servings}</h3>
