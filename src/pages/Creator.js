@@ -2,34 +2,50 @@ import React from 'react';
 import NavBar from "../components/NavBar";
 import Header from "../components/Header";
 import CreatorNavBar from "../components/CreatorNavBar";
+import OrderRecipeList from "../components/OrderRecipeList";
+import IngredientList from "../components/IngredientList";
 
 class Creator extends React.Component {
     constructor(props) {
         super(props);
-        this.state =
-            {color: 'red',
-             clicked: false};
+        this.state = {
+            creator: {},
+            loading: true
+        };
     }
 
-    isClicked() {
-        this.setState({clicked: !this.state.clicked});
-        if (this.state.clicked) {
-            this.setState({color: 'blue'});
-        }
-        else {
-            this.setState( {color: 'red'});
-        }
-
+    componentDidMount() {
+        //this.fetchCreator();
     }
 
     render() {
+        const loading = this.state.loading;
+        const creator = this.state.creator
+        let creatorProfile;
+        if (!loading) {
+            if (creator) {
+                creatorProfile = (
+                    <div>
+                        <h2>Screen Name: </h2>
+                    </div>
+                )
+            } else {
+                creatorProfile = (
+                    <div>
+                        <h2>You are not a creator yet!</h2>
+                        <button onClick={ () => this.isClicked()}>Become a Creator</button>
+                    </div>
+                )
+            }
+        } else {
+            creatorProfile = <h1>Loading...</h1>
+        }
         return (
             <div>
                 <Header/>
                 <CreatorNavBar/>
-                <h1>Profile Page</h1>
-                <p>My favorite color is {this.state.color}</p>
-                <button onClick={ () => this.isClicked()}>Click Me</button>
+                <h1>Creator Profile Page</h1>
+                {creatorProfile}
             </div>
         )
     }
