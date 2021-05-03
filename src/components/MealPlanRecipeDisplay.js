@@ -3,9 +3,7 @@ import Button from 'react-bootstrap/Button';
 import {Link} from "react-router-dom";
 import RecipeIngredientDisplay from "./RecipeIngredientDisplay";
 
-function RecipeDetailDisplay({recipe}) {
-    console.log("Recipe")
-    console.log(recipe)
+function MealPlanRecipeDisplay({recipe}) {
     const name = recipe.name;
     const calories = recipe.calories;
     const description = recipe.description;
@@ -18,16 +16,11 @@ function RecipeDetailDisplay({recipe}) {
     if (recipe) return (
         <div>
             <h2>{name}</h2>
-            <h3>Calories: {calories}</h3>
             {descriptionTag}
-            <h4>Ingredients:</h4>
-            {recipe.ingredients.items.map((ingredient, index) => {
-                return <RecipeIngredientDisplay key={index} ingredient={ingredient}/>;
-            })}
             <br></br>
         </div>
     )
     return (null);
     }
 
-export default RecipeDetailDisplay;
+export default MealPlanRecipeDisplay;

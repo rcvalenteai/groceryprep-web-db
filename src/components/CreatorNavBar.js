@@ -9,6 +9,7 @@ class CreatorNavBar extends React.Component {
                     <tbody>
                         <tr>
                             <td><Link to={"/"}>Home</Link></td>
+                            <td><Link to={"/creator"}>Creator Profile</Link></td>
                             <td><Link to={"/creator/mealplan"}>Meal Plans</Link></td>
                             <td><Link to={"/creator/recipe"}>Recipes</Link></td>
                         </tr>
