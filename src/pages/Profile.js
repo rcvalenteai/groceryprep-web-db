@@ -14,8 +14,9 @@ class Profile extends React.Component {
         };
     }
 
-    componentDidMount() { this.fetchRecipeDetail() }
-    fetchRecipeDetail = async () => {
+    componentDidMount() { this.fetchProfileData() }
+
+    fetchProfileData = async () => {
         console.log('foo')
         let sessionStorageString = window.sessionStorage.getItem('token')
         let sessionStorage = JSON.parse(sessionStorageString)
@@ -35,10 +36,7 @@ class Profile extends React.Component {
     render() {
         const loading = this.state.loading;
         let profile;
-        // console.log(this.state.body)
         if (!loading) {
-            console.log('doen loageing')
-            console.log(this.state.body)
             profile = (
                 <StaticProfile user = {this.state.body}/>
             )
