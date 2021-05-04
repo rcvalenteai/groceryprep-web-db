@@ -1,10 +1,11 @@
 import React from 'react';
 import {Link} from "react-router-dom";
+import stylesheet from '../css/NavBar.css'
 
 class NavBar extends React.Component {
     render() {
         return (
-            <div>
+            <div className='navbar'>
                 <table style={{width: "100%"}}>
                     <tbody>
                         <tr>

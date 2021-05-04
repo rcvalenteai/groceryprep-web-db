@@ -5,6 +5,7 @@ import RecipeList from "../components/RecipeList"
 import MultiSelect from "react-multi-select-component";
 import Dropdown from "react-dropdown"
 import qs from "querystring"
+// import stylesheet from "../css/Group.css"
 
 class SearchRecipe extends React.Component {
     constructor(props) {

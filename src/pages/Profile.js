@@ -2,13 +2,12 @@ import React from 'react';
 import NavBar from "../components/NavBar";
 import Header from "../components/Header";
 import StaticProfile from "../components/StaticProfile";
-// import qs from "querystring";
+import stylesheet from "../css/Profile.css";
 
 class Profile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            color: 'green',
             body: {},
             loading : true,
         };
@@ -38,13 +37,12 @@ class Profile extends React.Component {
                 <StaticProfile user = {this.state.body}/>
             )
         } else {
-            profile = <h1>Loading...</h1>
+            profile = <h1>User Profile Loading...</h1>
         }
         return (
             <div>
                 <Header/>
                 <NavBar/>
-                <h1>User Profile</h1>
                 {profile}
             </div>
         )

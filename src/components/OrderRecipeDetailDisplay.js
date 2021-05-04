@@ -22,7 +22,7 @@ function OrderRecipeDetailDisplay({recipe}) {
     const price = formatter.format(recipe.price);
     // render the UI
     if (recipe) return (
-        <div>
+        <div className='listDiaplayItem'>
             <h2>{name}</h2>
             <h3>Order Quantity: {orderQuantity}</h3>
             <h3>Calories: {calories}</h3>

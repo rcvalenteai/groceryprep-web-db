@@ -49,13 +49,13 @@ function RecipeListDisplay({recipe}) {
         return (
             <div>
                 <h2>{name}</h2>
-                <h3>Calories: {calories}</h3>
-                {descriptionTag}
-                <Link to={location}>Details</Link>
+                <p>Calories: {calories}</p>
+                <p>{descriptionTag}</p>
+                <p><Link to={location}>Details</Link></p>
 
                 <form onSubmit={e => addToOrder(e)}>
                     <label>
-                        Add To Order:
+                        Add To Order: 
                         <input type="number" min="1" step="1" value={quantity}
                                onChange={e => handleChange(e)}/>
                     </label>

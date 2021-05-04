@@ -1,5 +1,6 @@
 import React from 'react';
-import {Redirect, useHistory} from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
+import stylesheet from '../css/Header.css'
 
 function Header() {
     const history = useHistory();
@@ -11,8 +12,13 @@ function Header() {
     }
 
     return (
-        <div>
-            <h1>Grocery Prepper</h1>
+        <div className='header'>
+            {/* <div className='headerText'> */}
+                <br/>
+                <h1>Grocery Prepper</h1>
+                {/* <br/> */}
+            {/* </div> */}
+
             <button onClick={handleLogOut}>Logout</button>
         </div>
     )

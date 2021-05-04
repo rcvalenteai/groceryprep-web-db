@@ -1,5 +1,6 @@
 import React from 'react';
 import GroupListDisplay from "./GroupListDisplay"
+// import stylesheet from '../css/Group.css'
 
 function GroupList({data})
 {

@@ -1,0 +1,13 @@
+.header {
+    
+    /* text-align: right; */
+    
+    background-color: rgb(0, 0, 155);
+    color: white;
+    text-align: center;
+}
+.headerText{
+    background-color: rgb(0, 0, 155);
+    color: white;
+    text-align: center;
+}

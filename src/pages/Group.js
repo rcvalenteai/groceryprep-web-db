@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import GroupList from "../components/GroupList";
 import qs from "querystring";
 import CreateGroup from "../components/CreateGroup";
+// import stylesheet from "../css/Group.css"
 
 class Group extends React.Component {
     constructor(props) {
