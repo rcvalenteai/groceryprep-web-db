@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from "react-router-dom";
 import ingredientStatic from './staticingredients.png';
 import logoStatic from './staticlogo.png';
-
+import stylesheet from '../css/Home.css'
 class StaticMain extends React.Component {
     constructor(props) {
         super(props);
@@ -10,7 +10,7 @@ class StaticMain extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className='staticMain'>
                 <img src={logoStatic} alt={"Grocery Prepper logo"} style={{width: "80%"}}/>
                 <Greeting/>
                 <img src={ingredientStatic} alt={"static ingredient"} style={{width: "100%"}}/>

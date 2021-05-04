@@ -1,13 +1,15 @@
 .header {
-    
-    /* text-align: right; */
-    
     background-color: rgb(0, 0, 155);
     color: white;
-    text-align: center;
+    text-align: right;
 }
+
 .headerText{
     background-color: rgb(0, 0, 155);
     color: white;
     text-align: center;
+}
+
+.logoutButton {
+    text-align: right;
 }
