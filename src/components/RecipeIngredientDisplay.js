@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import {Link} from "react-router-dom";
+import stylesheet from '../css/ListItemDisplay.css'
 
 function RecipeIngredientDisplay({ingredient}) {
     const name = ingredient.iname;
@@ -10,11 +11,11 @@ function RecipeIngredientDisplay({ingredient}) {
     // render the UI
     if (ingredient) {
         return (
-            <div>
-                <h4>{name}</h4>
-                <h5>Calories: {calories}</h5>
-                <h5>Quantity: {quantity} {unit}</h5>
-                <br></br>
+            <div className='innerListItemDisplay'>
+                <h5>{name}</h5>
+                <p><t></t>Calories: {calories}</p>
+                <p>Quantity: {quantity} {unit}</p>
+                {/* <br></br> */}
             </div>
         )
     }

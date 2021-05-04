@@ -47,7 +47,7 @@ function RecipeListDisplay({recipe}) {
     // render the UI
     if (recipe) {
         return (
-            <div>
+            <div className='listItemDisplay'>
                 <h2>{name}</h2>
                 <p>Calories: {calories}</p>
                 <p>{descriptionTag}</p>

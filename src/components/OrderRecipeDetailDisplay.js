@@ -2,6 +2,7 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import {Link} from "react-router-dom";
 import RecipeIngredientDisplay from "./RecipeIngredientDisplay";
+import stylesheet from '../css/ListItemDisplay.css'
 
 function OrderRecipeDetailDisplay({recipe}) {
     const name = recipe.name;
@@ -22,18 +23,21 @@ function OrderRecipeDetailDisplay({recipe}) {
     const price = formatter.format(recipe.price);
     // render the UI
     if (recipe) return (
-        <div className='listDiaplayItem'>
+        <div>
+        <div className='listItemDisplay'>
             <h2>{name}</h2>
-            <h3>Order Quantity: {orderQuantity}</h3>
-            <h3>Calories: {calories}</h3>
-            <h3>Price: {price}</h3>
-            <h3>Servings: {servings}</h3>
+            <p>Order Quantity: {orderQuantity}</p>
+            <p>Calories: {calories}</p>
+            <p>Price: {price}</p>
+            <p>Servings: {servings}</p>
             {descriptionTag}
             <h4>Ingredients:</h4>
             {recipe.items.map((ingredient, index) => {
                 return <RecipeIngredientDisplay key={index} ingredient={ingredient}/>;
             })}
-            <br></br>
+            {/* <br></br> */}
+        </div>
+        <br></br>
         </div>
     )
     return (null);

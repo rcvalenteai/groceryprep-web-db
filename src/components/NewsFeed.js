@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from "react-router-dom";
 import RecipeListDisplay from "./RecipeListDisplay"
 import RecipeList from "./RecipeList";
+import stylesheet from '../css/ListItemDisplay.css'
 
 class NewsFeed extends React.Component {
 

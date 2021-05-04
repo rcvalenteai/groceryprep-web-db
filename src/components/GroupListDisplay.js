@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import {Link} from "react-router-dom";
-import stylesheet from '../css/GroupListDisplay.css'
+import stylesheet from '../css/ListItemDisplay.css'
 
 function GroupListDisplay({group}) {
     const name = group.name;
@@ -35,11 +35,12 @@ function GroupListDisplay({group}) {
     // render the UI
     if (group) {
         return (
-            <div classname='listDisplayItem'>
+            <div className='listItemDisplay'>
                 <h2>{name}</h2>
-                <h3>Creation Date: {creationDate}</h3>
+                <p>Creation Date: {creationDate}</p>
                 <button onClick={e => joinGroup()}>Join Group</button>
                 <br></br>
+                <br/>
             </div>
         )
     }
