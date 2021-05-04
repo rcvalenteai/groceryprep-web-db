@@ -9,14 +9,14 @@ class NavBar extends React.Component {
                 <table style={{width: "100%"}}>
                     <tbody>
                         <tr>
-                            <td><Link to={"/"}>Home</Link></td>
-                            <td><Link to={"/groceries"}>Groceries</Link></td>
-                            <td><Link to={"/searchrecipe"}>Search</Link></td>
-                            <td><Link to={"/searchingredients"}>Ingredients</Link></td>
-                            <td><Link to={"/searchmealplans"}>Meal Plans</Link></td>
-                            <td><Link to={"/group"}>Group</Link></td>
-                            <td><Link to={"/profile"}>Profile</Link></td>
-                            <td><Link to={"/creator"}>Creator</Link></td>
+                            <td><Link to={"/"} className='navBarLink'>Home</Link></td>
+                            <td><Link to={"/groceries"} className='navBarLink'>Groceries</Link></td>
+                            <td><Link to={"/searchrecipe"} className='navBarLink'>Search</Link></td>
+                            <td><Link to={"/searchingredients"} className='navBarLink'>Ingredients</Link></td>
+                            <td><Link to={"/searchmealplans"} className='navBarLink'>Meal Plans</Link></td>
+                            <td><Link to={"/group"} className='navBarLink'>Group</Link></td>
+                            <td><Link to={"/profile"} className='navBarLink'>Profile</Link></td>
+                            <td><Link to={"/creator"} className='navBarLink'>Creator</Link></td>
                         </tr>
                     </tbody>
                 </table>
