@@ -13,12 +13,11 @@ function Header() {
 
     return (
         <div className='header'>
-                {/* <br/> */}
-                <button onClick={handleLogOut} className='logoutButton'>Logout</button>
-                <div className='headerText'>
+            <button onClick={handleLogOut} className='logoutButton'>Log Out</button>
+            <div className='headerText'>
                 <h1>Grocery Prepper</h1>
-                </div>
-                <br></br>
+            </div>
+            <br></br>
         </div>
     )
 }

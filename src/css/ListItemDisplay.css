@@ -1,10 +1,18 @@
 .listItemDisplay {
+    margin-top: 10px;
+    margin-right: 10px;
+    /* margin-bottom: 10px; */
+    margin-left: 10px;
     border-width:2px;
     border-style:solid;
     border-color:grey;
 }
 
 .innerListItemDisplay {
+    
+    margin-right: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
     border-width:2px;
     border-style:solid;
     border-color:lightgrey;
