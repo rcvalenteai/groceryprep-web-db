@@ -17,7 +17,6 @@ class Profile extends React.Component {
     componentDidMount() { this.fetchProfileData() }
 
     fetchProfileData = async () => {
-        console.log('foo')
         let sessionStorageString = window.sessionStorage.getItem('token')
         let sessionStorage = JSON.parse(sessionStorageString)
         let userUrl = sessionStorage.userUrl
@@ -25,8 +24,6 @@ class Profile extends React.Component {
         let url = base_url + userUrl
         var data = await fetch(url)
         var userData = await data.json()
-        console.log('fethced:')
-        console.log(userData)
         this.setState({
             body: userData,
             loading: false
