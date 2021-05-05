@@ -17,3 +17,9 @@
     border-style:solid;
     border-color:lightgrey;
 }
+
+.dropdownItem {
+    border-width:1px;
+    border-style:solid;
+    border-color:lightgrey;
+}

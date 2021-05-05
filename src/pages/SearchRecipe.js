@@ -5,7 +5,7 @@ import RecipeList from "../components/RecipeList"
 import MultiSelect from "react-multi-select-component";
 import Dropdown from "react-dropdown"
 import qs from "querystring"
-// import stylesheet from "../css/Group.css"
+import stylesheet from "../css/ListItemDisplay.css"
 
 class SearchRecipe extends React.Component {
     constructor(props) {
@@ -89,9 +89,9 @@ class SearchRecipe extends React.Component {
         console.log("Selected")
         console.log(selected)
         this.setState({
-                selectedTags: selected,
-            },
-            function() {this.fetchSearchRecipes()}
+            selectedTags: selected,
+        },
+            function () { this.fetchSearchRecipes() }
         )
     }
 
@@ -153,20 +153,21 @@ class SearchRecipe extends React.Component {
 
         return (
             <div>
-                <Header/>
-                <NavBar/>
+                <Header />
+                <NavBar />
                 <h2>Current Group: {this.state.currentGroup.name}</h2>
-                <Dropdown options={groupLabelValue} onChange={group => this.handleSelectGroup(group)} value={this.state.currentGroup.name}/>
+                <p >Change Group: 
+                <Dropdown className='dropdownItem' options={groupLabelValue} onChange={group => this.handleSelectGroup(group)} value={this.state.currentGroup.name} /></p>
                 <h2>Search Recipe Page</h2>
                 <form onSubmit={e => this.handleSearch(e)}>
                     <label>
                         Search by Recipe Name:
-                        <input type="text" value={this.state.searchFilter} onChange={e => this.searchChangeHandler(e)}/>
+                        <input type="text" value={this.state.searchFilter} onChange={e => this.searchChangeHandler(e)} />
                     </label>
-                    <input type="submit" value="Submit"/>
+                    <input type="submit" value="Submit" />
                 </form>
                 <MultiSelect options={tagsLabelValue} value={this.state.selectedTags}
-                             onChange={selected => this.handleSelectedTags(selected)} labelledBy="Select"
+                    onChange={selected => this.handleSelectedTags(selected)} labelledBy="Select"
                 />
                 {recipeList}
             </div>

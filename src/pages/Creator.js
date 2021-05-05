@@ -64,7 +64,6 @@ class Creator extends React.Component {
             }).then(() =>
             this.fetchCreator()
         )
-
     }
 
     screenNameChangeHandler(event) {
