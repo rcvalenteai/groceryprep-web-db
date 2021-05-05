@@ -31,10 +31,12 @@ class Creator extends React.Component {
         let creator_data = await fetch(get_creator_url)
         let creator_data_obj = await creator_data.json()
 
+        this.setState({
+            loading: false
+        })
         if (!creator_data_obj.hasOwnProperty('errorMessage')) {
             this.setState({
-                creator: creator_data_obj,
-                loading: false
+                creator: creator_data_obj
             })
         }
     }

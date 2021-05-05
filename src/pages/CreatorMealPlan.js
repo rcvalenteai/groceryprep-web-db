@@ -33,6 +33,9 @@ class CreatorMealPlan extends React.Component {
         let creator_data = await fetch(get_creator_url)
         let creator_data_obj = await creator_data.json()
 
+        this.setState({
+            loading: false
+        })
         if (!creator_data_obj.hasOwnProperty('errorMessage')) {
             let get_mealplanlist_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/creator/mealplan/";
             get_mealplanlist_url += sessionState.userUrl
@@ -55,8 +58,7 @@ class CreatorMealPlan extends React.Component {
                 currentRecipe: recipelist_data_obj.items[0],
                 userRecipes: recipelist_data_obj.items,
                 mealPlanRecipes: mealplan_data_obj.body.recipes.items,
-                creator: creator_data_obj,
-                loading: false
+                creator: creator_data_obj
             })
         }
     }

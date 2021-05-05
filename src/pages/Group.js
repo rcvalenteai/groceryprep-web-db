@@ -21,7 +21,6 @@ class Group extends React.Component {
 
     fetchSearchGroups = async () => {
         let search = this.state.searchFilter;
-        console.log(search)
         let queryObj = {}
         let get_groups_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/group";
         if (search) {
@@ -29,9 +28,6 @@ class Group extends React.Component {
         }
         let query = qs.stringify(queryObj)
         get_groups_url += "?" + query
-        console.log(query)
-        console.log(get_groups_url)
-        console.log(this.state.selectedTags)
         let data = await fetch(get_groups_url)
         let groupData = await data.json()
         this.setState({
@@ -43,7 +39,6 @@ class Group extends React.Component {
 
     handleSearch(event) {
         event.preventDefault()
-        console.log("Search")
         this.fetchSearchGroups()
     }
 
@@ -54,9 +49,7 @@ class Group extends React.Component {
     }
 
     render() {
-        console.log(this.state.items)
         const loading = this.state.loading;
-        console.log(loading)
         let groupList;
         if (!loading) {
             groupList = (

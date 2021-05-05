@@ -14,7 +14,6 @@ function GroupListDisplay({group}) {
         let userIdRegex = /\d+/g
         let userId = sessionStorage.userUrl.match(userIdRegex)
         let base_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/group/join";
-        console.log(location)
         fetch(base_url, {
             //mode: 'no-cors',
             method: 'POST',
