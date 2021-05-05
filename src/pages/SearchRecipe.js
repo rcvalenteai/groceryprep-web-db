@@ -56,7 +56,6 @@ class SearchRecipe extends React.Component {
 
     fetchSearchRecipes = async () => {
         let search = this.state.searchFilter;
-        console.log(search)
         let tags = this.state.selectedTags.map(obj => {
             return obj.value;
         })
@@ -70,10 +69,6 @@ class SearchRecipe extends React.Component {
         }
         let query = qs.stringify(queryObj)
         get_recipes_url += "?" + query
-        console.log(query)
-        console.log(get_recipes_url)
-        console.log(this.state.selectedTags)
-        console.log(tags.toString())
         let data = await fetch(get_recipes_url)
         let recipeData = await data.json()
         this.setState({
@@ -86,8 +81,6 @@ class SearchRecipe extends React.Component {
 
     handleSelectedTags(selected) {
         //let value = event.target.value;
-        console.log("Selected")
-        console.log(selected)
         this.setState({
                 selectedTags: selected,
             },
@@ -97,7 +90,6 @@ class SearchRecipe extends React.Component {
 
     handleSearch(event) {
         event.preventDefault()
-        console.log("Search")
         this.fetchSearchRecipes()
     }
 
@@ -108,8 +100,6 @@ class SearchRecipe extends React.Component {
     }
 
     handleSelectGroup(group) {
-        console.log("Select Group")
-        console.log(group)
         let sessionStorageString = window.sessionStorage.getItem('token')
         let sessionStorage = JSON.parse(sessionStorageString)
         sessionStorage['groupUrl'] = group.value.location
@@ -120,9 +110,7 @@ class SearchRecipe extends React.Component {
     }
 
     render() {
-        console.log(this.state.items)
         const loading = this.state.loading;
-        console.log(loading)
         let recipeList;
         if (!loading) {
             recipeList = (

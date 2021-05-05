@@ -35,6 +35,9 @@ class CreatorRecipe extends React.Component {
         let creator_data = await fetch(get_creator_url)
         let creator_data_obj = await creator_data.json()
 
+        this.setState({
+            loading: false
+        })
         if (!creator_data_obj.hasOwnProperty('errorMessage')) {
             let get_recipelist_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/creator/recipe/";
             get_recipelist_url += sessionState.userUrl
@@ -49,8 +52,6 @@ class CreatorRecipe extends React.Component {
             let get_ingredientlist_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/ingredients";
             let ingredientlist_data = await fetch(get_ingredientlist_url)
             let ingredientlist_data_obj = await ingredientlist_data.json()
-            console.log("ingredients")
-            console.log(ingredientlist_data_obj)
 
             this.setState({
                 currentIngredient: ingredientlist_data_obj.items[0],
@@ -59,7 +60,6 @@ class CreatorRecipe extends React.Component {
                 userRecipes: recipelist_data_obj.items,
                 recipeDetail: recipe_data_obj.body,
                 creator: creator_data_obj,
-                loading: false
             })
         }
     }
@@ -77,8 +77,6 @@ class CreatorRecipe extends React.Component {
 
     addIngredientToRecipe = async () => {
         let base_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/ingredients/recipe";
-        console.log("add ingredient to recipe")
-        console.log(this.state.quantity)
         fetch(base_url, {
             //mode: 'no-cors',
             method: 'POST',
@@ -111,8 +109,6 @@ class CreatorRecipe extends React.Component {
     }
 
     handleQuantity(quantity) {
-        console.log("handle quantity")
-        console.log(quantity)
         this.setState({
                 quantity: quantity.target.value
             }

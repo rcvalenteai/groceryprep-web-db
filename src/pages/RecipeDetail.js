@@ -23,7 +23,6 @@ class RecipeDetail extends React.Component {
         get_recipes_url += query;
         var data = await fetch(get_recipes_url)
         var recipeData = await data.json()
-        console.log(recipeData)
         this.setState({ body: recipeData.body,
             loading: false  })
     }
@@ -32,7 +31,6 @@ class RecipeDetail extends React.Component {
         const loading = this.state.loading;
         let recipeList;
         if (!loading) {
-            console.log(this.state.body)
             recipeList = (
                 <RecipeDetailDisplay recipe = { this.state.body } />
             )

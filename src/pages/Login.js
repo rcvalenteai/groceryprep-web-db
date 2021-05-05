@@ -6,9 +6,6 @@ import PropTypes from "prop-types";
 
 async function fetchLogin(credientials) {
     let login_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/login";
-    console.log(credientials)
-    console.log(credientials.email)
-    console.log(credientials.password)
     return fetch(login_url, {
         //mode: 'no-cors',
         method: 'POST',
@@ -30,8 +27,6 @@ export default function Login({setToken}) {
             email,
             password
         });
-        console.log("token")
-        console.log(token)
         if(!token.hasOwnProperty('errorMessage')) {
             setToken(token)
             return <Redirect to ="/" />
