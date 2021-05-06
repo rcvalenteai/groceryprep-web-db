@@ -17,6 +17,10 @@ class CreatorRecipe extends React.Component {
             userRecipes: [],
             recipeDetail: null,
             quantity: 1.0,
+            recipeName: "",
+            recipeDescription: "",
+            recipeCalories: null,
+            recipeServings: 1,
             loading: true
         };
     }
@@ -75,6 +79,20 @@ class CreatorRecipe extends React.Component {
         })
     }
 
+    fetchUserRecipe = async () => {
+        let sessionStateString = sessionStorage.getItem('token')
+        let sessionState = JSON.parse(sessionStateString)
+
+        let get_recipelist_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/creator/recipe/";
+        get_recipelist_url += sessionState.userUrl
+        let recipelist_data = await fetch(get_recipelist_url)
+        let recipelist_data_obj = await recipelist_data.json()
+
+        this.setState({
+            userRecipes: recipelist_data_obj.items,
+        })
+    }
+
     addIngredientToRecipe = async () => {
         let base_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/ingredients/recipe";
         fetch(base_url, {
@@ -96,9 +114,40 @@ class CreatorRecipe extends React.Component {
         )
     }
 
+    createRecipe = async () => {
+        let sessionStateString = sessionStorage.getItem('token')
+        let sessionState = JSON.parse(sessionStateString)
+
+        let base_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/recipes";
+        fetch(base_url, {
+            //mode: 'no-cors',
+            method: 'POST',
+            body: JSON.stringify({
+                userUrl: sessionState.userUrl,
+                name: this.state.recipeName,
+                description: this.state.recipeDescription,
+                calories: this.state.recipeCalories,
+                servings: this.state.recipeServings
+            }),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }).then(response => response.json())
+            .then(responseData => {
+            }).then(() =>
+            this.fetchUserRecipe()
+        )
+    }
+
     handleAddIngredientToRecipe(event) {
         event.preventDefault()
         this.addIngredientToRecipe()
+    }
+
+    handleCreateRecipe(event) {
+        event.preventDefault()
+        this.createRecipe()
     }
 
     handleSelectIngredient(ingredient) {
@@ -122,6 +171,30 @@ class CreatorRecipe extends React.Component {
             function () {
                 this.fetchRecipe()
             })
+    }
+
+    recipeNameChangeHandler(event) {
+        this.setState({
+            recipeName: event.target.value
+        })
+    }
+
+    recipeDescriptionChangeHandler(event) {
+        this.setState({
+            recipeDescription: event.target.value
+        })
+    }
+
+    recipeCaloriesChangeHandler(event) {
+        this.setState({
+            recipeCalories: event.target.value
+        })
+    }
+
+    recipeServingsChangeHandler(event) {
+        this.setState({
+            recipeServings: event.target.value
+        })
     }
 
     render() {
@@ -149,11 +222,39 @@ class CreatorRecipe extends React.Component {
             return labelRecipeValue
         })
 
-        let creatorMealPlanList;
+        let creatorRecipeList;
         if (!loading) {
             if (creator) {
-                creatorMealPlanList = (
+                creatorRecipeList = (
                     <div>
+                        <h2>Create Recipe:</h2>
+                        <form onSubmit={e => this.handleCreateRecipe(e)}>
+                            <label>
+                                Name:
+                                <input type="text" value={this.state.recipeName}
+                                       onChange={e => this.recipeNameChangeHandler(e)}/>
+                            </label>
+                            <br/>
+                            <label>
+                                Description:
+                                <input type="text" value={this.state.recipeDescription}
+                                       onChange={e => this.recipeDescriptionChangeHandler(e)}/>
+                            </label>
+                            <br/>
+                            <label>
+                                Calories:
+                                <input type="number" min="0" step="1" value={this.state.recipeCalories}
+                                       onChange={e => this.recipeCaloriesChangeHandler(e)}/>
+                            </label>
+                            <br/>
+                            <label>
+                                Servings:
+                                <input type="number" min="0" step="1" value={this.state.recipeServings}
+                                       onChange={e => this.recipeServingsChangeHandler(e)}/>
+                            </label>
+                            <br/>
+                            <input type="submit" value="Create a Recipe"/>
+                        </form>
                         <h2>Selected Recipe: {this.state.currentRecipe.name}</h2>
                         <Dropdown options={recipeLabelValue} onChange={recipe => this.handleSelectRecipe(recipe)}
                                   value={this.state.currentRecipe.name}/>
@@ -175,21 +276,21 @@ class CreatorRecipe extends React.Component {
                     </div>
                 )
             } else {
-                creatorMealPlanList = (
+                creatorRecipeList = (
                     <div>
                         <h2>You are not a creator yet! Go Become One First!</h2>
                     </div>
                 )
             }
         } else {
-            creatorMealPlanList = <h1>Loading...</h1>
+            creatorRecipeList = <h1>Loading...</h1>
         }
         return (
             <div>
                 <Header/>
                 <CreatorNavBar/>
-                <h1>Creator Meal Plan Page</h1>
-                {creatorMealPlanList}
+                <h1>Creator Recipe Page</h1>
+                {creatorRecipeList}
             </div>
         )
     }

@@ -15,6 +15,8 @@ class CreatorMealPlan extends React.Component {
             currentRecipe: null,
             userRecipes: [],
             mealPlanRecipes: [],
+            newMealPlanName: "",
+            newMealPlanDescription: "",
             loading: true
         };
     }
@@ -74,6 +76,20 @@ class CreatorMealPlan extends React.Component {
         })
     }
 
+    fetchUserMealPlans = async () => {
+        let sessionStateString = sessionStorage.getItem('token')
+        let sessionState = JSON.parse(sessionStateString)
+
+        let get_mealplanlist_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/creator/mealplan/";
+        get_mealplanlist_url += sessionState.userUrl
+        let mealplanlist_data = await fetch(get_mealplanlist_url)
+        let mealplanlist_data_obj = await mealplanlist_data.json()
+
+        this.setState({
+            userMealPlans: mealplanlist_data_obj.items,
+        })
+    }
+
     addRecipeToMealPlan = async () => {
         let base_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/mealplan/recipe";
         fetch(base_url, {
@@ -94,9 +110,38 @@ class CreatorMealPlan extends React.Component {
         )
     }
 
+    createMealPlan = async () => {
+        let sessionStateString = sessionStorage.getItem('token')
+        let sessionState = JSON.parse(sessionStateString)
+
+        let base_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/mealplan";
+        fetch(base_url, {
+            //mode: 'no-cors',
+            method: 'POST',
+            body: JSON.stringify({
+                userUrl: sessionState.userUrl,
+                name: this.state.newMealPlanName,
+                description: this.state.newMealPlanDescription,
+            }),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }).then(response => response.json())
+            .then(responseData => {
+            }).then(() =>
+            this.fetchUserMealPlans()
+        )
+    }
+
     handleAddRecipeToMealPlan(event) {
         event.preventDefault()
         this.addRecipeToMealPlan()
+    }
+
+    handleCreateMealPlan(event) {
+        event.preventDefault()
+        this.createMealPlan()
     }
 
     handleSelectMealPlan(mealplan) {
@@ -112,6 +157,18 @@ class CreatorMealPlan extends React.Component {
         this.setState({
                 currentRecipe: recipe.value
             })
+    }
+
+    mealPlanNameChangeHandler(event) {
+        this.setState({
+            newMealPlanName: event.target.value
+        })
+    }
+
+    mealPlanDescriptionChangeHandler(event) {
+        this.setState({
+            newMealPlanDescription: event.target.value
+        })
     }
 
     render() {
@@ -141,6 +198,22 @@ class CreatorMealPlan extends React.Component {
             if (creator) {
                 creatorMealPlanList = (
                     <div>
+                        <h2>Create Meal Plan: </h2>
+                        <form onSubmit={e => this.handleCreateMealPlan(e)}>
+                            <label>
+                                Name:
+                                <input type="text" value={this.state.newMealPlanName}
+                                       onChange={e => this.mealPlanNameChangeHandler(e)}/>
+                            </label>
+                            <br/>
+                            <label>
+                                Description:
+                                <input type="text" value={this.state.newMealPlanDescription}
+                                       onChange={e => this.mealPlanDescriptionChangeHandler(e)}/>
+                            </label>
+                            <br/>
+                            <input type="submit" value="Create a Meal Plan"/>
+                        </form>
                         <h2>Selected Meal Plan: {this.state.currentMealPlan.name}</h2>
                         <Dropdown options={mealPlanLabelValue} onChange={mealplan => this.handleSelectMealPlan(mealplan)}
                                   value={this.state.currentMealPlan.name}/>
