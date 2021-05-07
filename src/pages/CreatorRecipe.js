@@ -5,6 +5,7 @@ import CreatorNavBar from "../components/CreatorNavBar";
 import Dropdown from "react-dropdown";
 import MealPlanRecipeList from "../components/MealPlanRecipeList";
 import RecipeDetailDisplay from "../components/RecipeDetailDisplay";
+import stylesheet from "../css/ListItemDisplay.css"
 
 class CreatorRecipe extends React.Component {
     constructor(props) {
@@ -268,12 +269,12 @@ class CreatorRecipe extends React.Component {
                         </form>
                         <h2>Selected Recipe: {this.state.currentRecipe.name}</h2>
                         <Dropdown options={recipeLabelValue} onChange={recipe => this.handleSelectRecipe(recipe)}
-                                  value={this.state.currentRecipe.name}/>
+                                  value={this.state.currentRecipe.name} className='dropdownItem'/>
                         {recipeDetail}
                         <h2>Add Ingredients to Recipe:</h2>
                         <Dropdown options={ingredientLabelValue}
                                   onChange={ingredient => this.handleSelectIngredient(ingredient)}
-                                  value={dropDownValue}/>
+                                  value={dropDownValue} className='dropdownItem'/>
                         <br/>
                         <form onSubmit={e => this.handleAddIngredientToRecipe(e)}>
                             <label>

@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import CreatorNavBar from "../components/CreatorNavBar";
 import Dropdown from "react-dropdown";
 import MealPlanRecipeList from "../components/MealPlanRecipeList";
+import stylesheet from "../css/ListItemDisplay.css"
 
 class CreatorMealPlan extends React.Component {
     constructor(props) {
@@ -221,13 +222,13 @@ class CreatorMealPlan extends React.Component {
                         </form>
                         <h2>Selected Meal Plan: {this.state.currentMealPlan.name}</h2>
                         <Dropdown options={mealPlanLabelValue} onChange={mealplan => this.handleSelectMealPlan(mealplan)}
-                                  value={this.state.currentMealPlan.name}/>
+                                  value={this.state.currentMealPlan.name}  className='dropdownItem'/>
                         <h2>Meal Plan Recipes:</h2>
                         <MealPlanRecipeList data={this.state.mealPlanRecipes}/>
                         <br />
                         <h2>Add Recipes to Meal Plan:</h2>
                         <Dropdown options={recipeLabelValue} onChange={recipe => this.handleSelectRecipe(recipe)}
-                                  value={this.state.currentRecipe.name}/>
+                                  value={this.state.currentRecipe.name} className='dropdownItem'/>
                         <br />
                         <button onClick={e => this.handleAddRecipeToMealPlan(e)}>Add Recipe to Meal Plan</button>
                     </div>

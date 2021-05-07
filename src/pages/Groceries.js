@@ -7,6 +7,7 @@ import Dropdown from "react-dropdown";
 import MultiSelect from "react-multi-select-component";
 import OrderRecipeList from "../components/OrderRecipeList";
 import IngredientList from "../components/IngredientList";
+import stylesheet from "../css/ListItemDisplay.css"
 
 class Groceries extends React.Component {
     constructor(props) {
@@ -288,7 +289,7 @@ class Groceries extends React.Component {
                 <NavBar/>
                 <h2>Current Group: {this.state.currentGroup.name}</h2>
                 <Dropdown options={groupLabelValue} onChange={group => this.handleSelectGroup(group)}
-                          value={this.state.currentGroup.name}/>
+                          value={this.state.currentGroup.name} className='dropdownItem'/>
                 <h2>Order Page</h2>
                 {orderDisplay}
             </div>
