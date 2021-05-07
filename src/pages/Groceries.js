@@ -39,39 +39,47 @@ class Groceries extends React.Component {
         get_user_groups_url += sessionState.userUrl
         let group_data = await fetch(get_user_groups_url)
         let user_group_data = await group_data.json()
-        let group_url = user_group_data.items[0].location
-        let get_recipes_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/order/";
-        get_recipes_url += group_url
-        let data = await fetch(get_recipes_url)
-        let orderData = await data.json()
-        let split_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/split-order/";
-        split_url += group_url
-        split_url += "&cost=" + orderData.totalCost
-        let split_data = await fetch(split_url)
-        let splitData = await split_data.json()
-
-        let currentGroup = user_group_data.items.find((e) => e.location === sessionState.groupUrl)
         this.setState({
-            currentGroup: currentGroup,
-            userGroups: user_group_data.items,
-            ingredients: orderData.ingredients,
-            ingredientCount: orderData.ingredient_count,
-            recipes: orderData.recipes,
-            recipeCount: orderData.recipe_count,
-            orderCost: orderData.totalCost,
-            costPerPerson: splitData.costPer,
-            loading: false
+            userGroups: user_group_data.items
         })
-        if (!orderData.hasOwnProperty('errorMessage')) {
+        if (sessionState.groupUrl != "group?groupId=None") {
+            let get_recipes_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/order/";
+            get_recipes_url += sessionState.groupUrl
+            let data = await fetch(get_recipes_url)
+            let orderData = await data.json()
+
+            let currentGroup = user_group_data.items.find((e) => e.location === sessionState.groupUrl)
             this.setState({
-                openOrder: true
+                currentGroup: currentGroup,
+                userGroups: user_group_data.items,
+                ingredients: orderData.ingredients,
+                ingredientCount: orderData.ingredient_count,
+                recipes: orderData.recipes,
+                recipeCount: orderData.recipe_count,
+                orderCost: orderData.totalCost,
+                loading: false
             })
+            if (!orderData.hasOwnProperty('errorMessage')) {
+                let split_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/split-order/";
+                split_url += sessionState.groupUrl
+                split_url += "&cost=" + orderData.totalCost
+                let split_data = await fetch(split_url)
+                let splitData = await split_data.json()
+
+                this.setState({
+                    openOrder: true,
+                    costPerPerson: splitData.costPer
+                })
+            } else {
+                this.setState({
+                    openOrder: false
+                })
+            }
         } else {
             this.setState({
-                openOrder: false
+                loading: false
             })
         }
-
     }
 
     fetchGroupOrder = async () => {
@@ -259,11 +267,17 @@ class Groceries extends React.Component {
                     {ingredientList}
                 </div>
             )
-        } else {
+        } else if (Object.keys(this.state.currentGroup).length !== 0) {
             orderDisplay = (
                 <div>
                     <h2>Open an Order!</h2>
                     <button onClick={e => this.handleOpenOrder(e)}>Open</button>
+                </div>
+            )
+        } else {
+            orderDisplay = (
+                <div>
+                    <h2>Join an Order Group!</h2>
                 </div>
             )
         }

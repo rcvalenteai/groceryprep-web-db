@@ -11,12 +11,16 @@ class CreatorRecipe extends React.Component {
         super(props);
         this.state = {
             creator: null,
-            currentIngredient: null,
+            currentIngredient: {},
             userIngredients: [],
-            currentRecipe: null,
+            currentRecipe: {},
             userRecipes: [],
-            recipeDetail: null,
+            recipeDetail: {},
             quantity: 1.0,
+            recipeName: "",
+            recipeDescription: "",
+            recipeCalories: null,
+            recipeServings: 1,
             loading: true
         };
     }
@@ -35,32 +39,36 @@ class CreatorRecipe extends React.Component {
         let creator_data = await fetch(get_creator_url)
         let creator_data_obj = await creator_data.json()
 
+        this.setState({
+            loading: false
+        })
         if (!creator_data_obj.hasOwnProperty('errorMessage')) {
             let get_recipelist_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/creator/recipe/";
             get_recipelist_url += sessionState.userUrl
             let recipelist_data = await fetch(get_recipelist_url)
             let recipelist_data_obj = await recipelist_data.json()
 
-            let get_recipe_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/";
-            get_recipe_url += recipelist_data_obj.items[0].location
-            let recipe_data = await fetch(get_recipe_url)
-            let recipe_data_obj = await recipe_data.json()
-
             let get_ingredientlist_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/ingredients";
             let ingredientlist_data = await fetch(get_ingredientlist_url)
             let ingredientlist_data_obj = await ingredientlist_data.json()
-            console.log("ingredients")
-            console.log(ingredientlist_data_obj)
 
             this.setState({
                 currentIngredient: ingredientlist_data_obj.items[0],
                 userIngredients: ingredientlist_data_obj.items,
-                currentRecipe: recipelist_data_obj.items[0],
-                userRecipes: recipelist_data_obj.items,
-                recipeDetail: recipe_data_obj.body,
-                creator: creator_data_obj,
-                loading: false
+                creator: creator_data_obj
             })
+            if (recipelist_data_obj.items.length > 0) {
+                let get_recipe_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/";
+                get_recipe_url += recipelist_data_obj.items[0].location
+                let recipe_data = await fetch(get_recipe_url)
+                let recipe_data_obj = await recipe_data.json()
+
+                this.setState({
+                    currentRecipe: recipelist_data_obj.items[0],
+                    userRecipes: recipelist_data_obj.items,
+                    recipeDetail: recipe_data_obj.body,
+                })
+            }
         }
     }
 
@@ -75,10 +83,22 @@ class CreatorRecipe extends React.Component {
         })
     }
 
+    fetchUserRecipe = async () => {
+        let sessionStateString = sessionStorage.getItem('token')
+        let sessionState = JSON.parse(sessionStateString)
+
+        let get_recipelist_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/creator/recipe/";
+        get_recipelist_url += sessionState.userUrl
+        let recipelist_data = await fetch(get_recipelist_url)
+        let recipelist_data_obj = await recipelist_data.json()
+
+        this.setState({
+            userRecipes: recipelist_data_obj.items,
+        })
+    }
+
     addIngredientToRecipe = async () => {
         let base_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/ingredients/recipe";
-        console.log("add ingredient to recipe")
-        console.log(this.state.quantity)
         fetch(base_url, {
             //mode: 'no-cors',
             method: 'POST',
@@ -98,9 +118,40 @@ class CreatorRecipe extends React.Component {
         )
     }
 
+    createRecipe = async () => {
+        let sessionStateString = sessionStorage.getItem('token')
+        let sessionState = JSON.parse(sessionStateString)
+
+        let base_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/recipes";
+        fetch(base_url, {
+            //mode: 'no-cors',
+            method: 'POST',
+            body: JSON.stringify({
+                userUrl: sessionState.userUrl,
+                name: this.state.recipeName,
+                description: this.state.recipeDescription,
+                calories: this.state.recipeCalories,
+                servings: this.state.recipeServings
+            }),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }).then(response => response.json())
+            .then(responseData => {
+            }).then(() =>
+            this.fetchUserRecipe()
+        )
+    }
+
     handleAddIngredientToRecipe(event) {
         event.preventDefault()
         this.addIngredientToRecipe()
+    }
+
+    handleCreateRecipe(event) {
+        event.preventDefault()
+        this.createRecipe()
     }
 
     handleSelectIngredient(ingredient) {
@@ -111,8 +162,6 @@ class CreatorRecipe extends React.Component {
     }
 
     handleQuantity(quantity) {
-        console.log("handle quantity")
-        console.log(quantity)
         this.setState({
                 quantity: quantity.target.value
             }
@@ -126,6 +175,30 @@ class CreatorRecipe extends React.Component {
             function () {
                 this.fetchRecipe()
             })
+    }
+
+    recipeNameChangeHandler(event) {
+        this.setState({
+            recipeName: event.target.value
+        })
+    }
+
+    recipeDescriptionChangeHandler(event) {
+        this.setState({
+            recipeDescription: event.target.value
+        })
+    }
+
+    recipeCaloriesChangeHandler(event) {
+        this.setState({
+            recipeCalories: event.target.value
+        })
+    }
+
+    recipeServingsChangeHandler(event) {
+        this.setState({
+            recipeServings: event.target.value
+        })
     }
 
     render() {
@@ -153,16 +226,50 @@ class CreatorRecipe extends React.Component {
             return labelRecipeValue
         })
 
-        let creatorMealPlanList;
+        let recipeDetail;
+        if (Object.keys(this.state.recipeDetail).length === 0) {
+            recipeDetail = <br />
+        } else {
+            recipeDetail = <RecipeDetailDisplay recipe={this.state.recipeDetail}/>
+        }
+
+        let creatorRecipeList;
         if (!loading) {
             if (creator) {
-                creatorMealPlanList = (
+                creatorRecipeList = (
                     <div>
+                        <h2>Create Recipe:</h2>
+                        <form onSubmit={e => this.handleCreateRecipe(e)}>
+                            <label>
+                                Name:
+                                <input type="text" value={this.state.recipeName}
+                                       onChange={e => this.recipeNameChangeHandler(e)}/>
+                            </label>
+                            <br/>
+                            <label>
+                                Description:
+                                <input type="text" value={this.state.recipeDescription}
+                                       onChange={e => this.recipeDescriptionChangeHandler(e)}/>
+                            </label>
+                            <br/>
+                            <label>
+                                Calories:
+                                <input type="number" min="0" step="1" value={this.state.recipeCalories}
+                                       onChange={e => this.recipeCaloriesChangeHandler(e)}/>
+                            </label>
+                            <br/>
+                            <label>
+                                Servings:
+                                <input type="number" min="0" step="1" value={this.state.recipeServings}
+                                       onChange={e => this.recipeServingsChangeHandler(e)}/>
+                            </label>
+                            <br/>
+                            <input type="submit" value="Create a Recipe"/>
+                        </form>
                         <h2>Selected Recipe: {this.state.currentRecipe.name}</h2>
                         <Dropdown options={recipeLabelValue} onChange={recipe => this.handleSelectRecipe(recipe)}
                                   value={this.state.currentRecipe.name}/>
-                        <RecipeDetailDisplay recipe={this.state.recipeDetail}/>
-                        <br/>
+                        {recipeDetail}
                         <h2>Add Ingredients to Recipe:</h2>
                         <Dropdown options={ingredientLabelValue}
                                   onChange={ingredient => this.handleSelectIngredient(ingredient)}
@@ -179,21 +286,21 @@ class CreatorRecipe extends React.Component {
                     </div>
                 )
             } else {
-                creatorMealPlanList = (
+                creatorRecipeList = (
                     <div>
                         <h2>You are not a creator yet! Go Become One First!</h2>
                     </div>
                 )
             }
         } else {
-            creatorMealPlanList = <h1>Loading...</h1>
+            creatorRecipeList = <h1>Loading...</h1>
         }
         return (
             <div>
                 <Header/>
                 <CreatorNavBar/>
-                <h1>Creator Meal Plan Page</h1>
-                {creatorMealPlanList}
+                <h1>Creator Recipe Page</h1>
+                {creatorRecipeList}
             </div>
         )
     }

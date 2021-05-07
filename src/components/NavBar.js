@@ -11,7 +11,7 @@ class NavBar extends React.Component {
                         <tr>
                             <td><Link to={"/"} className='navBarLink'>Home</Link></td>
                             <td><Link to={"/groceries"} className='navBarLink'>Groceries</Link></td>
-                            <td><Link to={"/searchrecipe"} className='navBarLink'>Search</Link></td>
+                            <td><Link to={"/searchrecipe"} className='navBarLink'>Recipes</Link></td>
                             <td><Link to={"/searchingredients"} className='navBarLink'>Ingredients</Link></td>
                             <td><Link to={"/searchmealplans"} className='navBarLink'>Meal Plans</Link></td>
                             <td><Link to={"/group"} className='navBarLink'>Group</Link></td>

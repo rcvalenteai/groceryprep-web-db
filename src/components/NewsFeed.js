@@ -8,8 +8,6 @@ class NewsFeed extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log("News Feed")
-        console.log(props)
         this.state = {
             body: {},
             loading: true,
@@ -30,19 +28,15 @@ class NewsFeed extends React.Component {
         get_recipes_url += query;
         var data = await fetch(get_recipes_url)
         var recipeData = await data.json()
-        console.log(recipeData)
         this.setState({
             items: recipeData.items,
             loading: false
         })
-        console.log(this.state);
     }
 
 
     render() {
-        console.log(this.state.items)
         const loading = this.state.loading;
-        console.log(loading)
         let recipeList;
         if (!loading) {
             recipeList = (

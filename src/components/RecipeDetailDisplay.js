@@ -4,8 +4,6 @@ import {Link} from "react-router-dom";
 import RecipeIngredientDisplay from "./RecipeIngredientDisplay";
 
 function RecipeDetailDisplay({recipe}) {
-    console.log("Recipe")
-    console.log(recipe)
     const name = recipe.name;
     const calories = recipe.calories;
     const description = recipe.description;
