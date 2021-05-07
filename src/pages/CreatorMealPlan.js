@@ -10,9 +10,9 @@ class CreatorMealPlan extends React.Component {
         super(props);
         this.state = {
             creator: null,
-            currentMealPlan: null,
+            currentMealPlan: {},
             userMealPlans: [],
-            currentRecipe: null,
+            currentRecipe: {},
             userRecipes: [],
             mealPlanRecipes: [],
             newMealPlanName: "",
@@ -44,24 +44,29 @@ class CreatorMealPlan extends React.Component {
             let mealplanlist_data = await fetch(get_mealplanlist_url)
             let mealplanlist_data_obj = await mealplanlist_data.json()
 
-            let get_mealplan_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/";
-            get_mealplan_url += mealplanlist_data_obj.items[0].location
-            let mealplan_data = await fetch(get_mealplan_url)
-            let mealplan_data_obj = await mealplan_data.json()
-
             let get_recipelist_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/creator/recipe/";
             get_recipelist_url += sessionState.userUrl
             let recipelist_data = await fetch(get_recipelist_url)
             let recipelist_data_obj = await recipelist_data.json()
-
             this.setState({
-                currentMealPlan: mealplanlist_data_obj.items[0],
-                userMealPlans: mealplanlist_data_obj.items,
                 currentRecipe: recipelist_data_obj.items[0],
                 userRecipes: recipelist_data_obj.items,
-                mealPlanRecipes: mealplan_data_obj.body.recipes.items,
                 creator: creator_data_obj
             })
+            if (mealplanlist_data_obj.items.length > 0) {
+                let get_mealplan_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/";
+                get_mealplan_url += mealplanlist_data_obj.items[0].location
+                let mealplan_data = await fetch(get_mealplan_url)
+                let mealplan_data_obj = await mealplan_data.json()
+
+                this.setState({
+                    currentMealPlan: mealplanlist_data_obj.items[0],
+                    userMealPlans: mealplanlist_data_obj.items,
+                    mealPlanRecipes: mealplan_data_obj.body.recipes.items,
+                    creator: creator_data_obj,
+                })
+
+            }
         }
     }
 

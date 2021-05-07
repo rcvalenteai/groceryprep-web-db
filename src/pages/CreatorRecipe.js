@@ -11,11 +11,11 @@ class CreatorRecipe extends React.Component {
         super(props);
         this.state = {
             creator: null,
-            currentIngredient: null,
+            currentIngredient: {},
             userIngredients: [],
-            currentRecipe: null,
+            currentRecipe: {},
             userRecipes: [],
-            recipeDetail: null,
+            recipeDetail: {},
             quantity: 1.0,
             recipeName: "",
             recipeDescription: "",
@@ -48,11 +48,6 @@ class CreatorRecipe extends React.Component {
             let recipelist_data = await fetch(get_recipelist_url)
             let recipelist_data_obj = await recipelist_data.json()
 
-            let get_recipe_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/";
-            get_recipe_url += recipelist_data_obj.items[0].location
-            let recipe_data = await fetch(get_recipe_url)
-            let recipe_data_obj = await recipe_data.json()
-
             let get_ingredientlist_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/ingredients";
             let ingredientlist_data = await fetch(get_ingredientlist_url)
             let ingredientlist_data_obj = await ingredientlist_data.json()
@@ -60,11 +55,20 @@ class CreatorRecipe extends React.Component {
             this.setState({
                 currentIngredient: ingredientlist_data_obj.items[0],
                 userIngredients: ingredientlist_data_obj.items,
-                currentRecipe: recipelist_data_obj.items[0],
-                userRecipes: recipelist_data_obj.items,
-                recipeDetail: recipe_data_obj.body,
-                creator: creator_data_obj,
+                creator: creator_data_obj
             })
+            if (recipelist_data_obj.items.length > 0) {
+                let get_recipe_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/";
+                get_recipe_url += recipelist_data_obj.items[0].location
+                let recipe_data = await fetch(get_recipe_url)
+                let recipe_data_obj = await recipe_data.json()
+
+                this.setState({
+                    currentRecipe: recipelist_data_obj.items[0],
+                    userRecipes: recipelist_data_obj.items,
+                    recipeDetail: recipe_data_obj.body,
+                })
+            }
         }
     }
 
@@ -222,6 +226,13 @@ class CreatorRecipe extends React.Component {
             return labelRecipeValue
         })
 
+        let recipeDetail;
+        if (Object.keys(this.state.recipeDetail).length === 0) {
+            recipeDetail = <br />
+        } else {
+            recipeDetail = <RecipeDetailDisplay recipe={this.state.recipeDetail}/>
+        }
+
         let creatorRecipeList;
         if (!loading) {
             if (creator) {
@@ -258,8 +269,7 @@ class CreatorRecipe extends React.Component {
                         <h2>Selected Recipe: {this.state.currentRecipe.name}</h2>
                         <Dropdown options={recipeLabelValue} onChange={recipe => this.handleSelectRecipe(recipe)}
                                   value={this.state.currentRecipe.name}/>
-                        <RecipeDetailDisplay recipe={this.state.recipeDetail}/>
-                        <br/>
+                        {recipeDetail}
                         <h2>Add Ingredients to Recipe:</h2>
                         <Dropdown options={ingredientLabelValue}
                                   onChange={ingredient => this.handleSelectIngredient(ingredient)}
