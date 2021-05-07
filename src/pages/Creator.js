@@ -92,9 +92,9 @@ class Creator extends React.Component {
             if (creator) {
                 creatorProfile = (
                     <div>
-                        <h2>Screen Name: {creator.screen_name}</h2>
-                        <h2>Platform: {creator.platform}</h2>
-                        <h2>Url: {creator.url}</h2>
+                        <p>Screen Name: {creator.screen_name}</p>
+                        <p>Platform: {creator.platform}</p>
+                        <p>Url: {creator.url}</p>
                     </div>
                 )
             } else {
