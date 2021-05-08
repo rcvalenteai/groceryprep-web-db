@@ -8,6 +8,7 @@ import MultiSelect from "react-multi-select-component";
 import OrderRecipeList from "../components/OrderRecipeList";
 import IngredientList from "../components/IngredientList";
 import stylesheet from "../css/ListItemDisplay.css"
+import {Link} from "react-router-dom";
 
 class Groceries extends React.Component {
     constructor(props) {
@@ -255,6 +256,9 @@ class Groceries extends React.Component {
             orderDisplay = (
                 <div>
                     <button onClick={e => this.handleCloseOrder(e)}>Close Order!</button>
+                    <br/>
+                    <p><Link to={"/order/convert/" + this.state.currentGroup.location}>Convert Order to Shopping List</Link></p>
+                    <br/>
                     <form onSubmit={e => this.handleSplit(e)}>
                         <label>
                             Calculate Order Cost:

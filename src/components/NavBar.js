@@ -10,7 +10,7 @@ class NavBar extends React.Component {
                     <tbody>
                         <tr>
                             <td><Link to={"/"} className='navBarLink'>Home</Link></td>
-                            <td><Link to={"/groceries"} className='navBarLink'>Groceries</Link></td>
+                            <td><Link to={"/groceries"} className='navBarLink'>Orders</Link></td>
                             <td><Link to={"/searchrecipe"} className='navBarLink'>Recipes</Link></td>
                             <td><Link to={"/searchingredients"} className='navBarLink'>Ingredients</Link></td>
                             <td><Link to={"/searchmealplans"} className='navBarLink'>Meal Plans</Link></td>

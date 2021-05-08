@@ -1,5 +1,6 @@
 import React from 'react';
 import IngredientListDisplay from "./IngredientListDisplay"
+import OrderIngredientListDisplay from "./OrderIngredientListDisplay";
 
 function IngredientList({data})
 {
@@ -8,7 +9,7 @@ function IngredientList({data})
     return (
       <div>
         {data.map((ingredient, index) => {
-          return <IngredientListDisplay ingredient={ingredient} key={index} />;
+          return <OrderIngredientListDisplay ingredient={ingredient} key={index}/>;
         })}
       </div>
     )
