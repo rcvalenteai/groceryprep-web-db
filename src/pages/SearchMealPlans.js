@@ -44,16 +44,18 @@ class SearchMealPlans extends React.Component {
         let sessionStateString = sessionStorage.getItem('token')
         let sessionState = JSON.parse(sessionStateString)
 
-        if (sessionState.groupUrl != "group?groupId=None") {
-            let get_user_groups_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/group/";
-            get_user_groups_url += sessionState.userUrl
-            let data = await fetch(get_user_groups_url)
-            let user_groupsData = await data.json()
+        let get_user_groups_url = "https://lkt9ygcr5g.execute-api.us-east-2.amazonaws.com/beta/group/";
+        get_user_groups_url += sessionState.userUrl
+        let data = await fetch(get_user_groups_url)
+        let user_groupsData = await data.json()
+        this.setState({
+            userGroups: user_groupsData.items,
+        })
 
+        if (sessionState.groupUrl != "group?groupId=None") {
             let currentGroup = user_groupsData.items.find((e) => e.location === sessionState.groupUrl)
             this.setState({
                 currentGroup: currentGroup,
-                userGroups: user_groupsData.items,
             })
         }
     }
