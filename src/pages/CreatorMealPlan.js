@@ -3,7 +3,7 @@ import NavBar from "../components/NavBar";
 import Header from "../components/Header";
 import CreatorNavBar from "../components/CreatorNavBar";
 import Dropdown from "react-dropdown";
-import MealPlanRecipeList from "../components/MealPlanRecipeList";
+import MealPlanRecipeCreatorList from "../components/MealPlanRecipeCreatorList";
 import stylesheet from "../css/ListItemDisplay.css"
 
 class CreatorMealPlan extends React.Component {
@@ -224,7 +224,7 @@ class CreatorMealPlan extends React.Component {
                         <Dropdown options={mealPlanLabelValue} onChange={mealplan => this.handleSelectMealPlan(mealplan)}
                                   value={this.state.currentMealPlan.name}  className='dropdownItem'/>
                         <h2>Meal Plan Recipes:</h2>
-                        <MealPlanRecipeList data={this.state.mealPlanRecipes}/>
+                        <MealPlanRecipeCreatorList data={this.state.mealPlanRecipes}/>
                         <br />
                         <h2>Add Recipes to Meal Plan:</h2>
                         <Dropdown options={recipeLabelValue} onChange={recipe => this.handleSelectRecipe(recipe)}

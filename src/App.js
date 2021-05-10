@@ -17,6 +17,7 @@ import Creator from "./pages/Creator";
 import CreatorMealPlan from "./pages/CreatorMealPlan";
 import CreatorRecipe from "./pages/CreatorRecipe";
 import OrderConvert from "./pages/OrderConvert";
+import MealPlanDetail from "./pages/MealPlanDetail";
 
 function App() {
     const {token, setToken} = useToken()
@@ -38,6 +39,7 @@ function App() {
                 <Route path={"/recipes/detail"} component={RecipeDetail}/>
                 <Route path={"/creator"} component={Creator} exact/>
                 <Route path={"/creator/mealplan"} component={CreatorMealPlan} exact/>
+                <Route path={"/mealplan/detail"} component={MealPlanDetail}/>
                 <Route path={"/creator/recipe"} component={CreatorRecipe} exact/>
                 <Route path={"/order/convert/group"} component={OrderConvert}/>
           <Route component={Error}/>
